@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elven Admin — Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232B211E'/%3E%3Ctext x='50' y='64' font-size='54' text-anchor='middle' font-family='Georgia,serif' fill='%23FBF1EC'%3EE%3C/text%3E%3C/svg%3E">
+</head>
+<body class="admin">
+
+  <div class="admin-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-side">
+      <div class="admin-mark">ELVEN<span>admin</span></div>
+      <nav class="admin-nav">
+        <a href="#" class="active" data-tab="listings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>
+          Listings
+        </a>
+        <a href="#" data-tab="categories">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          Categories
+        </a>
+        <a href="#" data-tab="headers">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
+          Section Headers
+        </a>
+        <a href="index.html" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3h7v7M21 3l-9 9M5 5h6M5 5v14h14v-6"/></svg>
+          View storefront
+        </a>
+      </nav>
+      <div class="admin-side-foot">
+        Changes save to this browser's local storage and appear on the storefront instantly.
+        <button class="btn ghost small" id="logoutBtn" style="margin-top:16px;width:100%">Logout</button>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="admin-main">
+
+      <!-- ========== TAB: LISTINGS ========== -->
+      <div class="tab-pane active" id="tab-listings">
+        <div class="admin-head"><h1>Listings</h1></div>
+        <p class="admin-sub">Add, edit, or remove products. Changes reflect on the storefront right away.</p>
+
+        <div class="admin-stats">
+          <div class="stat"><div class="v" id="statTotal">0</div><div class="l">total listings</div></div>
+          <div class="stat"><div class="v" id="statJewellery">0</div><div class="l">jewellery pieces</div></div>
+          <div class="stat"><div class="v" id="statHandbags">0</div><div class="l">handbags</div></div>
+          <div class="stat"><div class="v" id="statAvg">₹0</div><div class="l">average price</div></div>
+        </div>
+
+        <!-- Product form -->
+        <section class="panel" id="panelForm">
+          <div class="panel-head">
+            <h2 id="formTitle">Add a new listing</h2>
+            <span class="hint">Prices typically ₹399–₹2000</span>
+          </div>
+          <div class="panel-body">
+            <form id="productForm">
+              <div class="form-grid">
+
+                <div class="field">
+                  <label for="f-name">Product name</label>
+                  <input id="f-name" type="text" placeholder="e.g. Amara Pearl Drop Necklace" required>
+                </div>
+
+                <div class="field">
+                  <label for="f-category">Category</label>
+                  <select id="f-category"></select>
+                </div>
+
+                <div class="field">
+                  <label for="f-price">Price (INR)</label>
+                  <input id="f-price" type="number" min="0" step="1" placeholder="e.g. 899" required>
+                  <span class="msg" id="priceMsg"></span>
+                </div>
+
+                <div class="field">
+                  <label for="f-tag">Tag (optional)</label>
+                  <input id="f-tag" type="text" placeholder="New, Bestseller, or leave blank">
+                </div>
+
+                <div class="field">
+                  <label for="f-section">Section</label>
+                  <select id="f-section">
+                    <option value="">— None —</option>
+                    <option value="featured">Featured</option>
+                    <option value="bestseller">Best Seller</option>
+                    <option value="trending">Trending</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="f-desc">Description</label>
+                  <textarea id="f-desc" placeholder="A short, elegant line about the piece"></textarea>
+                </div>
+
+                <!-- Image upload -->
+                <div class="field full">
+                  <label>Product image</label>
+                  <div class="img-upload-wrap">
+                    <div class="img-upload-row">
+                      <label class="img-file-label" for="f-img-file">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+                        Upload image
+                      </label>
+                      <input id="f-img-file" type="file" accept="image/*" style="display:none">
+                      <span class="img-or">or</span>
+                      <input id="f-img-url" type="url" placeholder="Paste image URL" class="img-url-input">
+                      <button type="button" class="btn ghost small" id="clearImgBtn">Clear</button>
+                    </div>
+                    <div id="imgPreview" class="img-preview" style="display:none"></div>
+                  </div>
+                </div>
+
+                <!-- Card icon -->
+                <div class="field full">
+                  <label>Card icon (shown when no image)</label>
+                  <div class="icon-picker">
+                    <label><input type="radio" name="icon" value="necklace" checked><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><path d="M14 10c0 14 8 24 18 24s18-10 18-24"/><circle cx="32" cy="40" r="5"/></svg></span></label>
+                    <label><input type="radio" name="icon" value="earrings"><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><circle cx="24" cy="32" r="6"/><circle cx="40" cy="32" r="6"/></svg></span></label>
+                    <label><input type="radio" name="icon" value="bracelet"><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><ellipse cx="32" cy="32" rx="22" ry="12"/></svg></span></label>
+                    <label><input type="radio" name="icon" value="ring"><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><circle cx="32" cy="38" r="14"/></svg></span></label>
+                    <label><input type="radio" name="icon" value="handbag"><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><rect x="12" y="24" width="40" height="30" rx="2"/></svg></span></label>
+                    <label><input type="radio" name="icon" value="clutch"><span><svg viewBox="0 0 64 64" fill="none" stroke="#2B211E" stroke-width="2"><rect x="10" y="22" width="44" height="28" rx="2"/></svg></span></label>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn" id="submitBtn">Add listing</button>
+                  <button type="button" class="btn ghost" id="cancelBtn" style="display:none">Cancel edit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Product table -->
+        <section class="panel">
+          <div class="panel-head">
+            <h2>All listings</h2>
+            <button class="btn danger small" id="resetSeedBtn">Restore default catalog</button>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>Product</th><th>Category</th><th>Price</th><th>Section</th><th>Description</th><th>ID</th><th></th></tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div><!-- /tab-listings -->
+
+      <!-- ========== TAB: CATEGORIES ========== -->
+      <div class="tab-pane" id="tab-categories">
+        <div class="admin-head"><h1>Categories</h1></div>
+        <p class="admin-sub">Add custom categories or remove ones you've created. Default categories cannot be deleted.</p>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Add a new category</h2></div>
+          <div class="panel-body">
+            <div class="cat-add-row">
+              <input id="newCatInput" type="text" placeholder="e.g. Anklets" maxlength="32" class="cat-input">
+              <button class="btn" id="addCatBtn">Add category</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>All categories</h2></div>
+          <div class="panel-body">
+            <div id="catList" class="cat-list"></div>
+          </div>
+        </section>
+      </div><!-- /tab-categories -->
+
+      <!-- ========== TAB: SECTION HEADERS ========== -->
+      <div class="tab-pane" id="tab-headers">
+        <div class="admin-head"><h1>Section Headers</h1></div>
+        <p class="admin-sub">Customise headings and text across the storefront. Changes appear after a storefront page refresh.</p>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Edit headers</h2></div>
+          <div class="panel-body">
+            <div class="form-grid" id="headersForm"></div>
+          </div>
+        </section>
+      </div><!-- /tab-headers -->
+
+    </main>
+  </div>
+
+  <div class="toast" id="adminToast"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

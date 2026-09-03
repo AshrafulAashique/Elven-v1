@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elven — Fine Jewellery &amp; Handbags</title>
+<meta name="description" content="Elven — luxury jewellery and handbags for the modern Indian woman. Necklaces, earrings, bracelets, rings and bags from ₹399.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F3D9D4'/%3E%3Ctext x='50' y='64' font-size='54' text-anchor='middle' font-family='Georgia,serif' fill='%232B211E'%3EE%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <div id="loader">
+    <div class="loader-mark">ELVEN</div>
+    <div class="loader-track"><div class="loader-fill"></div></div>
+    <div class="loader-pct">0%</div>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-word">ELVEN</a>
+    <ul class="nav-links">
+      <li><a href="#featured">Featured</a></li>
+      <li><a href="#bestsellers">Best Sellers</a></li>
+      <li><a href="#jewellery">Jewellery</a></li>
+      <li><a href="#handbags">Handbags</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="nav-bag" id="bagBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+        Bag (<span id="bagCount">0</span>)
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-stage">
+      <canvas id="heroCanvas"></canvas>
+      <div class="hero-veil"></div>
+      <div class="hero-copy">
+        <span class="hero-eyebrow" id="heroTaglineEl">the india edit — jewellery &amp; bags</span>
+        <h1 id="heroTitleEl">Unwrap <em>everyday</em><br>luxury</h1>
+        <p class="hero-sub" id="heroSubEl">Fine-finished jewellery and handbags, designed in-house and priced from ₹399. Keep scrolling.</p>
+      </div>
+      <div class="hero-scrollcue"><span>scroll</span><span class="line"></span></div>
+    </div>
+  </section>
+
+  <!-- ============ Statement ============ -->
+  <section class="statement">
+    <span class="num">01 — the idea</span>
+    <p>Elven exists for the woman who wants pieces that feel considered, not disposable —
+    jewellery and bags with the finish of a luxury house, priced for real life.</p>
+  </section>
+
+  <!-- ============ Category rail ============ -->
+  <section class="rail">
+    <div class="rail-grid">
+      <a href="#jewellery" class="rail-card jewellery">
+        <span class="rail-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        <span class="glyph"><svg viewBox="0 0 64 64" fill="none" stroke-width="1"><path d="M14 10c0 14 8 24 18 24s18-10 18-24" stroke-linecap="round"/><circle cx="32" cy="40" r="5"/></svg></span>
+        <div>
+          <div class="rail-label">Jewellery</div>
+          <div class="rail-count" id="jewelleryCount">— pieces</div>
+        </div>
+      </a>
+      <a href="#handbags" class="rail-card handbags">
+        <span class="rail-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        <span class="glyph"><svg viewBox="0 0 64 64" fill="none" stroke-width="1"><path d="M20 24c0-8 5-14 12-14s12 6 12 14" stroke-linecap="round"/><rect x="12" y="24" width="40" height="30" rx="2"/></svg></span>
+        <div>
+          <div class="rail-label">Handbags</div>
+          <div class="rail-count" id="handbagsCount">— pieces</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED — horizontal carousel ============ -->
+  <section class="carousel-section featured-sec" id="section-featured" style="display:none">
+    <div class="carousel-head">
+      <h2 id="featuredTitleEl">Featured</h2>
+      <div class="carousel-head-right">
+        <span class="carousel-label">Scroll to explore</span>
+        <div class="carousel-arrows">
+          <button class="carousel-btn" id="featPrev" aria-label="Previous">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="carousel-btn" id="featNext" aria-label="Next">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-track-wrap" id="featuredWrap">
+      <div class="carousel-track" id="featuredGrid"></div>
+    </div>
+    <div class="carousel-progress">
+      <div class="carousel-progress-fill" id="featuredProgress"></div>
+    </div>
+    <a id="featured" style="display:none"></a>
+  </section>
+
+  <!-- ============ BEST SELLERS — horizontal carousel ============ -->
+  <section class="carousel-section bestseller-sec" id="section-bestseller" style="display:none">
+    <div class="carousel-head">
+      <h2 id="bestsellerTitleEl">Best Sellers</h2>
+      <div class="carousel-head-right">
+        <span class="carousel-label">Our top picks</span>
+        <div class="carousel-arrows">
+          <button class="carousel-btn" id="bsPrev" aria-label="Previous">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="carousel-btn" id="bsNext" aria-label="Next">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-track-wrap" id="bestsellerWrap">
+      <div class="carousel-track" id="bestsellerGrid"></div>
+    </div>
+    <div class="carousel-progress">
+      <div class="carousel-progress-fill" id="bestsellerProgress"></div>
+    </div>
+    <a id="bestsellers" style="display:none"></a>
+  </section>
+
+  <!-- ============ TRENDING — horizontal carousel ============ -->
+  <section class="carousel-section trending-sec" id="section-trending" style="display:none">
+    <div class="carousel-head">
+      <h2 id="trendingTitleEl">Trending Now</h2>
+      <div class="carousel-head-right">
+        <span class="carousel-label">This season</span>
+        <div class="carousel-arrows">
+          <button class="carousel-btn" id="trendPrev" aria-label="Previous">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="carousel-btn" id="trendNext" aria-label="Next">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-track-wrap" id="trendingWrap">
+      <div class="carousel-track" id="trendingGrid"></div>
+    </div>
+    <div class="carousel-progress">
+      <div class="carousel-progress-fill" id="trendingProgress"></div>
+    </div>
+  </section>
+
+  <!-- ============ Jewellery grid ============ -->
+  <section class="shop" id="jewellery">
+    <div class="section-head">
+      <h2 id="jewelleryTitleEl">Jewellery</h2>
+      <span class="count" id="jewelleryCountLabel">from ₹399</span>
+    </div>
+    <div class="grid" id="jewelleryGrid"></div>
+  </section>
+
+  <!-- ============ Editorial banner ============ -->
+  <section class="banner" id="about">
+    <div class="banner-art">
+      <svg viewBox="0 0 64 64" fill="none" stroke-width="1"><circle cx="32" cy="38" r="14"/><path d="M25 24l7-12 7 12-7 6z" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="banner-copy">
+      <span class="num">02 — how it's made</span>
+      <h2>Finished like fine jewellery, priced like neither.</h2>
+      <p>Every piece is plated to resist everyday wear, packed in a signature box, and inspected by hand before it leaves our Bengaluru studio. No middlemen, no markup for a logo.</p>
+      <a href="#jewellery" class="banner-cta">Shop the edit →</a>
+    </div>
+  </section>
+
+  <!-- ============ Handbags grid ============ -->
+  <section class="shop" id="handbags">
+    <div class="section-head">
+      <h2 id="handbagsTitleEl">Handbags</h2>
+      <span class="count" id="handbagsCountLabel">from ₹399</span>
+    </div>
+    <div class="grid" id="handbagsGrid"></div>
+  </section>
+
+  <!-- ============ Trust strip ============ -->
+  <section class="strip">
+    <div class="strip-grid">
+      <div><strong>Free shipping</strong>on orders over ₹999</div>
+      <div><strong>Cash on delivery</strong>available pan-India</div>
+      <div><strong>7-day returns</strong>no questions asked</div>
+      <div><strong>Secure checkout</strong>UPI, cards &amp; wallets</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <div class="foot-word">ELVEN</div>
+        <p class="foot-tag" id="footerTaglineEl">Fine-finished jewellery and handbags for the modern Indian woman. Designed in-house, priced from ₹399.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#jewellery">Jewellery</a></li>
+          <li><a href="#handbags">Handbags</a></li>
+          <li><a href="#featured">Featured</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Refunds</a></li>
+          <li><a href="shop-admin.html">Staff Login</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Stay in the loop</h4>
+        <form class="foot-form" onsubmit="return false">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Elven. All rights reserved.</span>
+      <span>Made in India</span>
+    </div>
+  </footer>
+
+  <!-- ============ Cart drawer ============ -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <h3>Your bag</h3>
+      <button class="drawer-close" id="drawerClose">&times;</button>
+    </div>
+    <div class="drawer-items" id="drawerItems"></div>
+    <div class="drawer-foot">
+      <div class="drawer-total"><span>Total</span><strong id="drawerTotal">₹0</strong></div>
+      <button class="drawer-checkout" id="checkoutBtn">Checkout via WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- ============ Checkout Modal ============ -->
+  <div class="modal-backdrop" id="checkoutBackdrop"></div>
+  <div class="checkout-modal" id="checkoutModal" role="dialog" aria-label="Checkout">
+    <div class="checkout-modal-head">
+      <h2>Complete your order</h2>
+      <button class="modal-close" id="closeCheckoutBtn">&times;</button>
+    </div>
+    <p class="checkout-note">Fill in your details and we'll send your order directly to our WhatsApp. We'll confirm it within minutes!</p>
+    <form id="checkoutForm" autocomplete="on">
+      <div class="co-field">
+        <label for="co-name">Full name</label>
+        <input id="co-name" type="text" placeholder="Your name" required>
+      </div>
+      <div class="co-field">
+        <label for="co-phone">WhatsApp / Phone number</label>
+        <input id="co-phone" type="tel" placeholder="+91 98765 43210" required>
+      </div>
+      <div class="co-field">
+        <label for="co-address">Delivery address</label>
+        <textarea id="co-address" placeholder="House / flat no., street, city, PIN code" rows="3" required></textarea>
+      </div>
+      <div class="co-field">
+        <label for="co-payment">Payment method</label>
+        <select id="co-payment" required>
+          <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+          <option value="UPI">UPI</option>
+          <option value="Card">Debit / Credit Card</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-checkout-submit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M3 12a9 9 0 1018 0A9 9 0 003 12zm9-4v4l3 3"/></svg>
+        Place Order on WhatsApp
+      </button>
+    </form>
+  </div>
+
+  <!-- ============ Mobile App Tab Bar ============ -->
+  <div class="mobile-tab-bar">
+    <a href="#" class="tab-btn active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#jewellery" class="tab-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Shop</span>
+    </a>
+    <button class="tab-btn" id="mobileBagBtn">
+      <div class="tab-badge" id="mobileBagCount">0</div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+      <span>Bag</span>
+    </button>
+    <a href="shop-admin.html" class="tab-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Admin</span>
+    </a>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
