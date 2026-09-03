@@ -36,6 +36,10 @@ const defaultDB = {
 // Async DB Reader
 async function readDB() {
   if (!redis) {
+    if (process.env.VERCEL) {
+      console.warn("Vercel KV not configured. Using ephemeral memory.");
+      return defaultDB; // Do not use fs on Vercel (read-only filesystem)
+    }
     if (!fs.existsSync(DB_FILE)) {
       fs.writeFileSync(DB_FILE, JSON.stringify(defaultDB, null, 2));
       return defaultDB;
@@ -65,7 +69,7 @@ async function readDB() {
 async function writeDB(data) {
   if (redis) {
     await redis.set('elven_db', data);
-  } else {
+  } else if (!process.env.VERCEL) {
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
   }
 }
