@@ -20,7 +20,7 @@ function elvenLoadCats(){
 }
 function elvenSaveCats(list){
   localStorage.setItem(ELVEN_CATS_KEY, JSON.stringify(list));
-  fetch('http://localhost:3000/api/categories', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(list) }).catch(e => {});
+  fetch('/api/categories', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(list) }).catch(e => {});
 }
 function elvenAddCat(name){
   const list = elvenLoadCats();
@@ -55,7 +55,7 @@ function elvenLoadHeaders(){
 }
 function elvenSaveHeaders(h){
   localStorage.setItem(ELVEN_HDR_KEY, JSON.stringify(h));
-  fetch('http://localhost:3000/api/headers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(h) }).catch(e => {});
+  fetch('/api/headers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(h) }).catch(e => {});
 }
 
 /* ---------- seed catalog ---------- */
@@ -144,7 +144,7 @@ function elvenLoad(){
 
 function elvenSave(list){
   localStorage.setItem(ELVEN_KEY, JSON.stringify(list));
-  fetch('http://localhost:3000/api/products', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(list) }).catch(e => {});
+  fetch('/api/products', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(list) }).catch(e => {});
   window.dispatchEvent(new CustomEvent('elven:changed'));
 }
 
@@ -180,9 +180,9 @@ function elvenResetSeed(){
 async function elvenSyncBackend() {
   try {
     const [pRes, cRes, hRes] = await Promise.all([
-      fetch('http://localhost:3000/api/products'),
-      fetch('http://localhost:3000/api/categories'),
-      fetch('http://localhost:3000/api/headers')
+      fetch('/api/products'),
+      fetch('/api/categories'),
+      fetch('/api/headers')
     ]);
     if (!pRes.ok) return;
     

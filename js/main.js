@@ -462,7 +462,7 @@ async function initCustomerAuth() {
   const token = localStorage.getItem('elven_token');
   if (token) {
     try {
-      const res = await fetch('http://localhost:3000/api/user', {
+      const res = await fetch('/api/user', {
         headers: { 'Authorization': 'Bearer ' + token }
       });
       if (res.ok) {
@@ -497,7 +497,7 @@ async function toggleWishlist(productId) {
   }
   const token = localStorage.getItem('elven_token');
   try {
-    const res = await fetch('http://localhost:3000/api/user/wishlist', {
+    const res = await fetch('/api/user/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({ productId })

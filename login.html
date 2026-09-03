@@ -171,7 +171,7 @@
     err.style.display = 'none';
     
     try {
-      const res = await fetch(`http://localhost:3000/api/auth/${type}`, {
+      const res = await fetch(`/api/auth/${type}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -201,7 +201,7 @@
     const token = localStorage.getItem('elven_token');
     if (token) {
       try {
-        const res = await fetch('http://localhost:3000/api/user', {
+        const res = await fetch('/api/user', {
           headers: { 'Authorization': 'Bearer ' + token }
         });
         if (res.ok) {
