@@ -172,13 +172,13 @@
       </div>
 
       <form id="loginForm" autocomplete="off">
-        <div class="field-wrap">
+        <div class="field-wrap" id="unameWrap" style="display:none">
           <label for="uname">Username</label>
-          <input id="uname" type="text" placeholder="Enter username" autofocus autocomplete="username">
+          <input id="uname" type="text" autocomplete="username">
         </div>
         <div class="field-wrap">
           <label for="pwd">Password</label>
-          <input id="pwd" type="password" placeholder="Enter password" autocomplete="current-password">
+          <input id="pwd" type="password" placeholder="Enter your staff password" autofocus autocomplete="current-password">
         </div>
         <div class="error-msg" id="errMsg">Incorrect username or password.</div>
         <button type="submit" class="btn-login">Enter Admin Panel</button>
@@ -202,6 +202,16 @@
     { user: 'manager',    pass: 'elvenShop2026'    },
     { user: 'superadmin', pass: 'Elven#Master99'   },
   ];
+
+  // Ensure they accessed via the secret URL extension
+  const pathUser = window.location.pathname.replace('/', '').trim();
+  const isValidUser = ELVEN_ADMINS.some(a => a.user === pathUser);
+
+  if (!isValidUser && window.location.pathname !== '/shop-admin.html') {
+    window.location.replace('/'); // Redirect to home if it's an invalid path
+  } else if (isValidUser) {
+    document.getElementById('uname').value = pathUser;
+  }
 
   // If already authenticated, skip to admin
   if(sessionStorage.getItem('elven_admin_auth') === 'granted'){
