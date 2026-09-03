@@ -1,7 +1,7 @@
 /* ============================================================
    ELVEN — storefront script
 /* ---------- global state ---------- */
-const WA_NUMBER = '919353927653'; // EDIT THIS TO CHANGE WHATSAPP NUMBER
+const WA_NUMBER = '919449413372'; // Updated as per user request
 let currentUser = null;
 let currentWishlist = [];
 
@@ -439,21 +439,22 @@ function buildWAMessage(formData){
   }).filter(Boolean).join('\n');
 
   return encodeURIComponent(
-`🛍️ *New Order from Elven Store*
-━━━━━━━━━━━━━━━━━━━━
-📦 *Order No:* ${orderNo}
-━━━━━━━━━━━━━━━━━━━━
-*Items:*
+`✨ *New Order | Elven Store* ✨
+──────────────────────
+*Order ID:* ${orderNo}
+*Name:* ${formData.name}
+*Contact:* ${formData.phone}
+──────────────────────
+*Your Selection:*
 ${itemLines}
-━━━━━━━━━━━━━━━━━━━━
-💰 *Total: ${inr(total)}*
-━━━━━━━━━━━━━━━━━━━━
-👤 *Customer:* ${formData.name}
-📱 *Phone:* ${formData.phone}
-📍 *Address:* ${formData.address}
-💳 *Payment:* ${formData.payment}
-━━━━━━━━━━━━━━━━━━━━
-Please confirm this order. Thank you! 🙏`
+──────────────────────
+*Total Amount:* ${inr(total)}
+*Payment Mode:* ${formData.payment}
+──────────────────────
+*Delivery Address:*
+${formData.address}
+
+_Thank you for choosing Elven. Please confirm this order to proceed with dispatch!_ 🤍`
   );
 }
 
