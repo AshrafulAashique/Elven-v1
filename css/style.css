@@ -399,12 +399,12 @@ footer{ padding:100px var(--edge) 40px; }
 
 /* ---------------- Cart drawer (lightweight) ---------------- */
 .drawer-backdrop{
-  position:fixed; inset:0; background:rgba(43,33,30,.35); z-index:80; opacity:0; pointer-events:none;
+  position:fixed; inset:0; background:rgba(43,33,30,.35); z-index:110; opacity:0; pointer-events:none;
   transition:opacity .35s;
 }
 .drawer-backdrop.open{ opacity:1; pointer-events:auto; }
 .drawer{
-  position:fixed; right:0; top:0; bottom:0; width:min(400px,92vw); background:var(--cream); z-index:90;
+  position:fixed; right:0; top:0; bottom:0; width:min(400px,92vw); background:var(--cream); z-index:120;
   transform:translateX(100%); transition:transform .45s var(--ease);
   display:flex; flex-direction:column; padding:30px;
 }
@@ -418,9 +418,9 @@ footer{ padding:100px var(--edge) 40px; }
   width:60px; height:70px; background:var(--blush); flex-shrink:0; display:flex; align-items:center; justify-content:center;
 }
 .drawer-item .thumb svg{ width:50%; height:50%; stroke:var(--ink); }
-.drawer-item .info{ flex:1; }
-.drawer-item .info .n{ font-family:var(--display); font-size:15px; }
-.drawer-item .info .p{ font-size:12.5px; color:var(--ink-70); margin-top:4px; }
+.drawer-item .info{ flex:1; min-width:0; }
+.drawer-item .info .n{ font-family:var(--display); font-size:15px; line-height:1.3; word-break:break-word; }
+.drawer-item .info .p{ font-size:12.5px; color:var(--ink-70); margin-top:6px; }
 .drawer-item .rm{ font-size:11px; color:var(--ink-45); border-bottom:1px solid var(--ink-45); }
 .drawer-empty{ color:var(--ink-45); font-size:13px; text-align:center; margin-top:60px; }
 .drawer-foot{ border-top:1px solid rgba(43,33,30,.12); padding-top:18px; margin-top:10px; }
@@ -532,7 +532,7 @@ footer{ padding:100px var(--edge) 40px; }
   }
   .carousel-track-wrap::-webkit-scrollbar { display: none; }
   .carousel-track { gap: 14px; }
-  .carousel-track .card { flex: 0 0 78vw; scroll-snap-align: center; }
+  .carousel-track .card { flex: 0 0 48vw; scroll-snap-align: center; }
   .card-body{ padding:16px 14px 20px; }
   .card-price{ font-size:16px; }
 
