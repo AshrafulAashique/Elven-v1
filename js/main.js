@@ -1,9 +1,25 @@
 /* ============================================================
    ELVEN — storefront script
+   ============================================================ */
+localStorage.removeItem('elven_products_v2'); // FORCE REFRESH FOR NEW PRODUCTS
+
 /* ---------- global state ---------- */
 const WA_NUMBER = '919449413372'; // Updated as per user request
 let currentUser = null;
 let currentWishlist = [];
+
+// Performance utility
+function rafThrottle(callback) {
+  let ticking = false;
+  return (...args) => {
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      callback(...args);
+      ticking = false;
+    });
+  };
+}
 
 /* ---------- icon library ---------- */
 const ELVEN_ICONS = {
@@ -49,9 +65,9 @@ function applyHeaders(){
 
 /* ---------- nav ---------- */
 const navEl = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', rafThrottle(() => {
   navEl.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive:true });
+}), { passive:true });
 
 (function mobileNav(){
   const toggle = document.getElementById('navToggle');
@@ -67,181 +83,17 @@ window.addEventListener('scroll', () => {
   }));
 })();
 
-/* ---------- hero frame-sequence scroll animation ---------- */
-(function heroScrub(){
-  const canvas = document.getElementById('heroCanvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const FRAME_COUNT = 90;
-  const framePath = i => `assets/frames/frame_${String(i).padStart(4,'0')}.jpg`;
-
-  const images = new Array(FRAME_COUNT);
-  let loaded = 0;
-  const loaderFill = document.querySelector('.loader-fill');
-  const loaderPct  = document.querySelector('.loader-pct');
-  const loaderEl   = document.getElementById('loader');
-
-  function setCanvasSize(){
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width  = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-  }
-  setCanvasSize();
-
-  let currentFrame = 0;
-  function draw(i){
-    const img = images[i];
-    if(!img || !img.complete) return;
-    const cw = canvas.width, ch = canvas.height;
-    const ir = img.width / img.height, cr = cw / ch;
-    let dw, dh, dx, dy;
-    if(ir > cr){ dh = ch; dw = ch * ir; dx = (cw-dw)/2; dy = 0; }
-    else        { dw = cw; dh = cw / ir; dx = 0; dy = (ch-dh)/2; }
-    ctx.clearRect(0,0,cw,ch);
-    ctx.drawImage(img, dx, dy, dw, dh);
-  }
-
-  for(let i=1;i<=FRAME_COUNT;i++){
-    const img = new Image();
-    img.onload = img.onerror = () => {
-      loaded++;
-      const pct = Math.round(loaded/FRAME_COUNT*100);
-      if(loaderFill) loaderFill.style.width = pct + '%';
-      if(loaderPct)  loaderPct.textContent  = pct + '%';
-      if(loaded === 1) draw(0);
-      if(loaded === FRAME_COUNT){
-        setTimeout(() => loaderEl && loaderEl.classList.add('done'), 220);
-        onScroll();
-      }
-    };
-    img.src = framePath(i);
-    images[i-1] = img;
-  }
-
-  const heroSection = document.querySelector('.hero');
-  const heroCopy    = document.querySelector('.hero-copy');
-  const heroCue     = document.querySelector('.hero-scrollcue');
-
-  let ticking = false;
-  function onScroll(){
-    if(ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const rect  = heroSection.getBoundingClientRect();
-      const total = heroSection.offsetHeight - window.innerHeight;
-      const progress = Math.min(1, Math.max(0, -rect.top / total));
-      const idx = Math.min(FRAME_COUNT-1, Math.floor(progress * (FRAME_COUNT-1)));
-      if(idx !== currentFrame || loaded === FRAME_COUNT){ currentFrame = idx; draw(idx); }
-      if(heroCopy){
-        const fade = 1 - Math.min(1, progress / 0.28);
-        heroCopy.style.opacity   = fade;
-        heroCopy.style.transform = `translateY(${(1-fade) * -30}px) translateY(-50%)`;
-      }
-      if(heroCue) heroCue.style.opacity = progress > 0.05 ? 0 : 1;
-      ticking = false;
-    });
-  }
-
-  window.addEventListener('scroll', onScroll, { passive:true });
-  window.addEventListener('resize', () => { setCanvasSize(); draw(currentFrame); });
-})();
+/* ---------- hero frame-sequence scroll animation (REMOVED for native scroll) ---------- */
 
 /* ======================================================
-   CAROUSEL ENGINE
+   CAROUSEL ENGINE (REMOVED for native scroll)
    ====================================================== */
-function initCarousel(trackId, wrapId, prevId, nextId, progressId){
-  const track    = document.getElementById(trackId);
-  const wrap     = document.getElementById(wrapId);
-  const prevBtn  = document.getElementById(prevId);
-  const nextBtn  = document.getElementById(nextId);
-  const progress = document.getElementById(progressId);
-  if(!track || !wrap) return;
-
-  let currentIndex = 0;
-
-  function getCardWidth(){
-    const first = track.querySelector('.card');
-    if(!first) return 300;
-    return first.offsetWidth + 20; // card + gap
-  }
-
-  function totalCards(){ return track.querySelectorAll('.card').length; }
-
-  function clamp(val, min, max){ return Math.min(max, Math.max(min, val)); }
-
-  function goTo(idx){
-    const cards = totalCards();
-    if(!cards) return;
-    currentIndex = clamp(idx, 0, cards - 1);
-    const offset = currentIndex * getCardWidth();
-    track.style.transform = `translateX(-${offset}px)`;
-    // progress bar
-    if(progress){
-      const pct = cards <= 1 ? 100 : (currentIndex / (cards - 1)) * 100;
-      progress.style.width = Math.max(8, pct) + '%';
-    }
-  }
-
-  if(prevBtn) prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
-  if(nextBtn) nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
-
-  // Keyboard navigation when focused on the section
-  wrap.addEventListener('keydown', e => {
-    if(e.key === 'ArrowLeft')  goTo(currentIndex - 1);
-    if(e.key === 'ArrowRight') goTo(currentIndex + 1);
-  });
-
-  /* ---- Mouse drag / touch scroll ---- */
-  let startX = 0, startOffset = 0, dragging = false;
-
-  function dragStart(x){
-    startX      = x;
-    startOffset = currentIndex * getCardWidth();
-    dragging    = true;
-    track.style.transition = 'none';
-  }
-
-  function dragMove(x){
-    if(!dragging) return;
-    const dx     = startX - x;
-    const offset = clamp(startOffset + dx, 0, (totalCards()-1) * getCardWidth());
-    track.style.transform = `translateX(-${offset}px)`;
-  }
-
-  function dragEnd(x){
-    if(!dragging) return;
-    dragging = false;
-    track.style.transition = '';
-    const dx = startX - x;
-    if(Math.abs(dx) > 40){
-      goTo(currentIndex + (dx > 0 ? 1 : -1));
-    } else {
-      goTo(currentIndex); // snap back
-    }
-  }
-
-  // Mouse
-  wrap.addEventListener('mousedown',  e => dragStart(e.clientX));
-  window.addEventListener('mousemove',e => { if(dragging) dragMove(e.clientX); });
-  window.addEventListener('mouseup',  e => { if(dragging) dragEnd(e.clientX); });
-
-  // Touch
-  wrap.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive:true });
-  wrap.addEventListener('touchmove',  e => { if(dragging){ e.preventDefault(); dragMove(e.touches[0].clientX); } }, { passive:false });
-  wrap.addEventListener('touchend',   e => dragEnd(e.changedTouches[0].clientX));
-
-  // Recalculate on resize
-  window.addEventListener('resize', () => goTo(currentIndex));
-
-  goTo(0); // initialise
-  return { goTo };
-}
 
 /* ---------- card HTML ---------- */
 function cardHTML(p){
   const icon = ELVEN_ICONS[p.icon] || ELVEN_ICONS.necklace;
   const mediaContent = p.image
-    ? `<img src="${p.image}" alt="${p.name}">`
+    ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">`
     : icon;
   const isWished = currentWishlist.includes(p.id);
   const heartFill = isWished ? 'var(--rose-2)' : 'none';
@@ -249,20 +101,22 @@ function cardHTML(p){
   
   return `
   <article class="card" data-id="${p.id}">
-    <div class="card-media" style="background:${gradientFor(p.id)};">
-      ${p.tag ? `<span class="card-tag">${p.tag}</span>` : ''}
-      <button class="card-fav" aria-label="Save" onclick="toggleWishlist('${p.id}')">
-        <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
-      </button>
-      ${mediaContent}
-    </div>
-    <div class="card-body">
-      <div class="card-cat">${p.category}</div>
-      <h3 class="card-name">${p.name}</h3>
-      <div class="card-row">
-        <span class="card-price">${inr(p.price)}</span>
-        <button class="card-add" data-add="${p.id}">Add to bag</button>
+    <a href="product.html?id=${p.id}" class="card-link-wrapper" style="text-decoration:none; color:inherit; display:block;">
+      <div class="card-media" style="background:${gradientFor(p.id)};">
+        ${p.tag ? `<span class="card-tag">${p.tag}</span>` : ''}
+        <button class="card-fav" aria-label="Save" onclick="event.preventDefault(); toggleWishlist('${p.id}')">
+          <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
+        </button>
+        ${mediaContent}
       </div>
+      <div class="card-body">
+        <div class="card-cat">${p.category}</div>
+        <h3 class="card-name">${p.name}</h3>
+      </div>
+    </a>
+    <div class="card-row" style="padding: 0 20px 26px;">
+      <span class="card-price">${inr(p.price)}</span>
+      <button class="card-add" data-add="${p.id}">Add to bag</button>
     </div>
   </article>`;
 }
@@ -275,10 +129,14 @@ function renderGrid(el, list){
     return;
   }
   el.innerHTML = list.map(cardHTML).join('');
+  
+  if (window.elvenRevealObserver) {
+    el.querySelectorAll('.card').forEach(c => {
+      c.setAttribute('data-reveal', '');
+      window.elvenRevealObserver.observe(c);
+    });
+  }
 }
-
-/* ---- Carousel refs — initialised after render ---- */
-const carousels = {};
 
 /* ---------- render all sections ---------- */
 function renderAll(){
@@ -301,14 +159,6 @@ function renderAll(){
   renderGrid(document.getElementById('featuredGrid'),   featured);
   renderGrid(document.getElementById('bestsellerGrid'), bestseller);
   renderGrid(document.getElementById('trendingGrid'),   trending);
-
-  // Re-init carousels after fresh render
-  if(featured.length)
-    carousels.feat = initCarousel('featuredGrid','featuredWrap','featPrev','featNext','featuredProgress');
-  if(bestseller.length)
-    carousels.bs   = initCarousel('bestsellerGrid','bestsellerWrap','bsPrev','bsNext','bestsellerProgress');
-  if(trending.length)
-    carousels.trend= initCarousel('trendingGrid','trendingWrap','trendPrev','trendNext','trendingProgress');
 
   // Regular grids
   const jewellery = products.filter(p => p.category !== 'Handbags');
@@ -364,7 +214,7 @@ function renderCart(){
       total += p.price * line.qty;
       count += line.qty;
       const thumb = p.image
-        ? `<div class="thumb" style="background:#f3d9d4;overflow:hidden"><img src="${p.image}" style="width:100%;height:100%;object-fit:cover"></div>`
+        ? `<div class="thumb" style="background:#f3d9d4;overflow:hidden"><img src="${p.image}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async"></div>`
         : `<div class="thumb" style="background:${gradientFor(p.id)}">${ELVEN_ICONS[p.icon]||''}</div>`;
       return `
       <div class="drawer-item">
@@ -516,6 +366,17 @@ async function toggleWishlist(productId) {
 
 /* ---------- DOMContentLoaded ---------- */
 document.addEventListener('DOMContentLoaded', async () => {
+  
+  window.elvenRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        window.elvenRevealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+
+  document.querySelectorAll('[data-reveal]').forEach(el => window.elvenRevealObserver.observe(el));
   await initCustomerAuth();
   renderAll();
   renderCart();
@@ -550,3 +411,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 window.addEventListener('elven:changed', renderAll);
 window.addEventListener('storage', e => { if(e.key === ELVEN_KEY) renderAll(); });
+
+window.addEventListener('load', () => {
+  const loaderEl = document.getElementById('loader');
+  if(loaderEl) {
+    loaderEl.classList.add('done');
+    setTimeout(() => loaderEl.style.display = 'none', 600);
+  }
+});

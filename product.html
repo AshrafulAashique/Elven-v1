@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Elven — Product</title>
+  <meta name="description" content="Discover premium luxury jewellery and handbags at Elven.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* PDP specific styles */
+    .pdp-main {
+      padding: 120px var(--edge) 80px;
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+    @media (max-width: 900px) {
+      .pdp-main {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    .pdp-image-wrap {
+      aspect-ratio: 4/5;
+      background: var(--blush);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pdp-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pdp-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .pdp-cat {
+      font-size: 12px;
+      letter-spacing: .2em;
+      color: var(--rose-2);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .pdp-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 4vw, 54px);
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .pdp-price {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 30px;
+    }
+    .pdp-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-70);
+      margin-bottom: 40px;
+    }
+    .pdp-add-btn {
+      background: var(--ink);
+      color: var(--white);
+      border: 0;
+      padding: 18px 32px;
+      font-size: 13px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background .3s, transform .2s;
+    }
+    .pdp-add-btn:hover {
+      background: var(--rose-2);
+      transform: translateY(-2px);
+    }
+    .pdp-add-btn:active {
+      transform: translateY(0);
+    }
+    .pdp-details-list {
+      margin-top: 40px;
+      border-top: 1px solid rgba(43,33,30,.1);
+      padding-top: 24px;
+    }
+    .pdp-details-list li {
+      font-size: 13.5px;
+      color: var(--ink-70);
+      margin-bottom: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .pdp-details-list li svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink-45);
+      fill: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <a href="index.html" class="nav-word">ELVEN</a>
+    <ul class="nav-links">
+      <li><a href="index.html#section-featured">Featured</a></li>
+      <li><a href="index.html#jewellery">Jewellery</a></li>
+      <li><a href="index.html#handbags">Handbags</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="nav-btn" onclick="openDrawer()" aria-label="Cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 002-2V6l-3-4H6zM3 6h18M16 10a4 4 0 01-8 0" stroke-width="1.8"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ============ PDP MAIN ============ -->
+  <main class="pdp-main" id="pdpContainer">
+    <!-- Populated by JS -->
+    <div style="grid-column: 1 / -1; padding: 100px; text-align: center; color: var(--ink-45);">
+      Loading product details...
+    </div>
+  </main>
+
+  <!-- ============ RELATED PRODUCTS ============ -->
+  <section class="carousel-section">
+    <div class="carousel-head">
+      <h2>You may also like</h2>
+    </div>
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" id="relatedGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <h2>ELVEN</h2>
+        <p>Fine-finished jewellery and handbags for the modern Indian woman. Designed in-house, priced from ₹399.</p>
+        <p class="footer-desc">Our mission is to democratize luxury. We believe that premium materials, artisanal craftsmanship, and impeccable design should be accessible every day. Explore collections that empower and elevate your personal style.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Customer Care</h3>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">Jewellery Care Guide</a>
+        <a href="#">Ring Sizing</a>
+        <a href="#">FAQ & Support</a>
+      </div>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="index.html#section-featured">Featured Collection</a>
+        <a href="index.html#section-bestseller">Best Sellers</a>
+        <a href="index.html#jewellery">Jewellery</a>
+        <a href="index.html#handbags">Handbags</a>
+      </div>
+      <div class="footer-col">
+        <h3>Store Information</h3>
+        <p>Email: hello@elven.in</p>
+        <p>WhatsApp: +91 94494 13372</p>
+        <p>Hours: Mon-Sat, 10am - 6pm</p>
+        <p class="legal-links">
+          <a href="#">Privacy Policy</a> · <a href="terms.html">Terms of Service & Returns</a>
+        </p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Elven. All rights reserved.</span>
+      <span>Made with love in India</span>
+    </div>
+  </footer>
+
+  <!-- ============ Cart drawer ============ -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <h3>Your bag</h3>
+      <button class="drawer-close" id="drawerClose">&times;</button>
+    </div>
+    <div class="drawer-items" id="drawerItems"></div>
+    <div class="drawer-foot">
+      <div class="drawer-total"><span>Total</span><strong id="drawerTotal">₹0</strong></div>
+      <button class="drawer-checkout" id="checkoutBtn">Checkout via WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      const allProducts = elvenLoad();
+      
+      const product = allProducts.find(p => p.id === productId);
+      
+      if (!product) {
+        document.getElementById('pdpContainer').innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 100px; text-align: center;">
+            <h2>Product not found</h2>
+            <a href="index.html" style="color:var(--rose-2); margin-top:20px; display:inline-block;">Return to Home</a>
+          </div>
+        `;
+        return;
+      }
+      
+      // Render PDP
+      const isWished = window.currentWishlist && window.currentWishlist.includes(product.id);
+      const heartFill = isWished ? 'var(--rose-2)' : 'none';
+      const heartStroke = isWished ? 'var(--rose-2)' : 'currentColor';
+      
+      const pdpHTML = `
+        <div style="grid-column: 1 / -1; margin-bottom: -30px; display: flex; justify-content: space-between; align-items: center;">
+          <a href="index.html" style="text-decoration:none; color:var(--ink-70); font-size: 14px; letter-spacing:.05em; display:flex; align-items:center; gap:6px;">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+             Back to Shop
+          </a>
+        </div>
+        <div class="pdp-image-wrap" style="position:relative;">
+          <button style="position:absolute; right:20px; top:20px; z-index:10; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.9); border:none; box-shadow:0 4px 12px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; cursor:pointer;" aria-label="Save" onclick="toggleWishlist('${product.id}'); const s=this.querySelector('svg'); const isF=s.getAttribute('fill')!=='none'; s.setAttribute('fill', isF?'none':'var(--rose-2)'); s.setAttribute('stroke', isF?'currentColor':'var(--rose-2)');">
+            <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8" style="width:20px; height:20px;"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
+          </button>
+          ${product.image ? `<img src="${product.image}" alt="${product.name}">` : `<div style="font-size:100px;">${ELVEN_ICONS[product.icon] || ''}</div>`}
+        </div>
+        <div class="pdp-info">
+          <div class="pdp-cat">${product.category}</div>
+          <h1 class="pdp-title">${product.name}</h1>
+          <div class="pdp-price">${inr(product.price)}</div>
+          <p class="pdp-desc">${product.desc}</p>
+          <button class="pdp-add-btn" data-add="${product.id}">Add to Bag — ${inr(product.price)}</button>
+          
+          <ul class="pdp-details-list">
+            <li><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/></svg> Ships across India within 3-7 days</li>
+            <li><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Signature luxury gift packaging included</li>
+            <li><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> 100% secure checkout via WhatsApp</li>
+          </ul>
+        </div>
+      `;
+      document.getElementById('pdpContainer').innerHTML = pdpHTML;
+      
+      // Update page title
+      document.title = `${product.name} — Elven`;
+      
+      // Bind Add button
+      bindAddButtons();
+      
+      // Render Related Products
+      const relatedGrid = document.getElementById('relatedGrid');
+      // Find other products in same category
+      let related = allProducts.filter(p => p.category === product.category && p.id !== product.id);
+      if(related.length < 4) {
+        // Fallback to other bestsellers if not enough in same category
+        const others = allProducts.filter(p => p.section === 'bestseller' && p.id !== product.id && p.category !== product.category);
+        related = related.concat(others);
+      }
+      related = related.slice(0, 6);
+      
+      if(related.length > 0) {
+        renderGrid(relatedGrid, related);
+      } else {
+        relatedGrid.parentElement.parentElement.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

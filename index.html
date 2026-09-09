@@ -7,9 +7,10 @@
 <meta name="description" content="Elven — luxury jewellery and handbags for the modern Indian woman. Necklaces, earrings, bracelets, rings and bags from ₹399.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F3D9D4'/%3E%3Ctext x='50' y='64' font-size='54' text-anchor='middle' font-family='Georgia,serif' fill='%232B211E'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="image" href="assets/frames/frame_0001.jpg" fetchpriority="high">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
     <div class="loader-pct">0%</div>
   </div>
 
-  <nav class="nav">
+  <nav class="nav nav-transparent">
     <a href="index.html" class="nav-word">ELVEN</a>
     <ul class="nav-links">
       <li><a href="#section-featured">Featured</a></li>
@@ -38,28 +39,47 @@
   </nav>
 
   <!-- ============ HERO ============ -->
-  <section class="hero">
+  <section class="hero hero-coffee-bg">
     <div class="hero-stage">
-      <canvas id="heroCanvas"></canvas>
-      <div class="hero-veil"></div>
-      <div class="hero-copy">
-        <span class="hero-eyebrow" id="heroTaglineEl">the india edit — jewellery &amp; bags</span>
-        <h1 id="heroTitleEl">Unwrap <em>everyday</em><br>luxury</h1>
-        <p class="hero-sub" id="heroSubEl">Fine-finished jewellery and handbags, designed in-house and priced from ₹399. Keep scrolling.</p>
+      <div class="hero-logo-container">
+        <h1 class="hero-logo-massive magical-glow">ELVEN</h1>
+        <div class="hero-text-block">
+          <p class="hero-sub" id="heroSubEl">Fine-finished jewellery and handbags, designed in-house and priced from ₹399. Keep scrolling.</p>
+          <p class="hero-desc">Discover our meticulously crafted collections, bridging the gap between timeless heritage and modern sophistication. Every piece is a statement of elegance, designed for the empowered woman who demands uncompromising luxury in her everyday life.</p>
+        </div>
       </div>
+      
       <div class="hero-scrollcue"><span>scroll</span><span class="line"></span></div>
     </div>
   </section>
 
+  <!-- ============ Packaging Video ============ -->
+  <section class="packaging-section" data-reveal>
+    <div class="packaging-inner">
+      <div class="packaging-copy">
+        <h2>Unboxing Luxury</h2>
+        <p>Every Elven piece arrives in our signature premium packaging, crafted to make every purchase feel like a gift—whether for yourself or a loved one. From the velvet-lined box to the embossed seal, the experience is uncompromising.</p>
+        <p class="legal-note"><strong>Note on Returns:</strong> To protect our customers and ensure authenticity, an unedited unboxing video is strictly required to process any return or exchange claims. <a href="terms.html">Read our policy</a>.</p>
+      </div>
+      <div class="packaging-video-wrap">
+        <!-- Added a reliable video source from Pexels, with a fallback image poster -->
+        <video autoplay muted loop playsinline class="packaging-video" poster="https://images.unsplash.com/photo-1599643478524-fb5244098795?w=1200&q=80">
+          <source src="assets/packaging.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ Statement ============ -->
-  <section class="statement">
+  <section class="statement" data-reveal>
     <span class="num">01 — the idea</span>
     <p>Elven exists for the woman who wants pieces that feel considered, not disposable —
     jewellery and bags with the finish of a luxury house, priced for real life.</p>
   </section>
 
   <!-- ============ Category rail ============ -->
-  <section class="rail">
+  <section class="rail" data-reveal>
     <div class="rail-grid">
       <a href="#jewellery" class="rail-card jewellery">
         <span class="rail-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
@@ -86,21 +106,10 @@
       <h2 id="featuredTitleEl">Featured</h2>
       <div class="carousel-head-right">
         <span class="carousel-label">Scroll to explore</span>
-        <div class="carousel-arrows">
-          <button class="carousel-btn" id="featPrev" aria-label="Previous">
-            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="carousel-btn" id="featNext" aria-label="Next">
-            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
       </div>
     </div>
     <div class="carousel-track-wrap" id="featuredWrap">
       <div class="carousel-track" id="featuredGrid"></div>
-    </div>
-    <div class="carousel-progress">
-      <div class="carousel-progress-fill" id="featuredProgress"></div>
     </div>
     <a id="featured" style="display:none"></a>
   </section>
@@ -111,21 +120,10 @@
       <h2 id="bestsellerTitleEl">Best Sellers</h2>
       <div class="carousel-head-right">
         <span class="carousel-label">Our top picks</span>
-        <div class="carousel-arrows">
-          <button class="carousel-btn" id="bsPrev" aria-label="Previous">
-            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="carousel-btn" id="bsNext" aria-label="Next">
-            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
       </div>
     </div>
     <div class="carousel-track-wrap" id="bestsellerWrap">
       <div class="carousel-track" id="bestsellerGrid"></div>
-    </div>
-    <div class="carousel-progress">
-      <div class="carousel-progress-fill" id="bestsellerProgress"></div>
     </div>
     <a id="bestsellers" style="display:none"></a>
   </section>
@@ -136,21 +134,10 @@
       <h2 id="trendingTitleEl">Trending Now</h2>
       <div class="carousel-head-right">
         <span class="carousel-label">This season</span>
-        <div class="carousel-arrows">
-          <button class="carousel-btn" id="trendPrev" aria-label="Previous">
-            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="carousel-btn" id="trendNext" aria-label="Next">
-            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
       </div>
     </div>
     <div class="carousel-track-wrap" id="trendingWrap">
       <div class="carousel-track" id="trendingGrid"></div>
-    </div>
-    <div class="carousel-progress">
-      <div class="carousel-progress-fill" id="trendingProgress"></div>
     </div>
   </section>
 
@@ -164,7 +151,7 @@
   </section>
 
   <!-- ============ Editorial banner ============ -->
-  <section class="banner" id="about">
+  <section class="banner" id="about" data-reveal>
     <div class="banner-art">
       <svg viewBox="0 0 64 64" fill="none" stroke-width="1"><circle cx="32" cy="38" r="14"/><path d="M25 24l7-12 7 12-7 6z" stroke-linejoin="round"/></svg>
     </div>
@@ -186,48 +173,50 @@
   </section>
 
   <!-- ============ Trust strip ============ -->
-  <section class="strip">
+  <section class="strip" data-reveal>
     <div class="strip-grid">
       <div><strong>Free shipping</strong>on orders over ₹999</div>
-      <div><strong>Cash on delivery</strong>available pan-India</div>
+      <div><strong>All India Shipping</strong>available on all orders</div>
       <div><strong>7-day returns</strong>no questions asked</div>
       <div><strong>Secure checkout</strong>UPI, cards &amp; wallets</div>
     </div>
   </section>
 
-  <footer>
-    <div class="foot-grid">
-      <div>
-        <div class="foot-word">ELVEN</div>
-        <p class="foot-tag" id="footerTaglineEl">Fine-finished jewellery and handbags for the modern Indian woman. Designed in-house, priced from ₹399.</p>
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <h2>ELVEN</h2>
+        <p id="footerTaglineEl">Fine-finished jewellery and handbags for the modern Indian woman. Designed in-house, priced from ₹399.</p>
+        <p class="footer-desc">Our mission is to democratize luxury. We believe that premium materials, artisanal craftsmanship, and impeccable design should be accessible every day. Explore collections that empower and elevate your personal style.</p>
       </div>
-      <div class="foot-col">
-        <h4>Shop</h4>
-        <ul>
-          <li><a href="#jewellery">Jewellery</a></li>
-          <li><a href="#handbags">Handbags</a></li>
-          <li><a href="#section-featured">Featured</a></li>
-        </ul>
+      <div class="footer-col">
+        <h3>Customer Care</h3>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">Jewellery Care Guide</a>
+        <a href="#">Ring Sizing</a>
+        <a href="#">FAQ & Support</a>
       </div>
-      <div class="foot-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Refunds</a></li>
-        </ul>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="#section-featured">Featured Collection</a>
+        <a href="#section-bestseller">Best Sellers</a>
+        <a href="#jewellery">Jewellery</a>
+        <a href="#handbags">Handbags</a>
       </div>
-      <div class="foot-col">
-        <h4>Stay in the loop</h4>
-        <form class="foot-form" onsubmit="return false">
-          <input type="email" placeholder="Your email" required>
-          <button type="submit">Join</button>
-        </form>
+      <div class="footer-col">
+        <h3>Store Information</h3>
+        <p>Email: hello@elven.in</p>
+        <p>WhatsApp: +91 94494 13372</p>
+        <p>Hours: Mon-Sat, 10am - 6pm</p>
+        <p class="legal-links">
+          <a href="#">Privacy Policy</a> · <a href="terms.html">Terms of Service & Returns</a>
+        </p>
       </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Elven. All rights reserved.</span>
-      <span>Made in India</span>
+      <span>Made with love in India</span>
     </div>
   </footer>
 
@@ -269,7 +258,6 @@
       <div class="co-field">
         <label for="co-payment">Payment method</label>
         <select id="co-payment" required>
-          <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
           <option value="UPI">UPI</option>
           <option value="Card">Debit / Credit Card</option>
           <option value="Bank Transfer">Bank Transfer</option>
