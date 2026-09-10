@@ -121,9 +121,12 @@ function renderTable(){
     return;
   }
   tbody.innerHTML = list.map(p => {
-    const thumb = p.image
-      ? `<div class="p-thumb" style="background:#f3d9d4"><img src="${p.image}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>`
+    const mainImg = (p.images && p.images.length) ? p.images[0] : p.image;
+    const thumb = mainImg
+      ? `<div class="p-thumb" style="background:#f3d9d4"><img src="${mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>`
       : `<div class="p-thumb" style="background:${gradientFor(p.id)}">${ICONS[p.icon]||ICONS.necklace}</div>`;
+    const isSoldOut = p.soldOut || p.quantity === 0;
+    const stockBadge = isSoldOut ? `<span class="badge" style="background:#e0707020;color:#e07070">Sold Out</span>` : (p.quantity !== undefined && p.quantity !== null ? `<span style="font-size:12px;color:var(--ink-70)">${p.quantity} in stock</span>` : `<span style="font-size:12px;color:var(--ink-70)">In stock</span>`);
     return `
     <tr>
       <td>
@@ -137,6 +140,7 @@ function renderTable(){
       </td>
       <td><span class="badge">${p.category}</span></td>
       <td>${inr(p.price)}</td>
+      <td>${stockBadge}</td>
       <td>${p.section ? `<span class="section-badge ${p.section}">${SECTION_LABELS[p.section]}</span>` : '<span style="color:var(--ink-40)">—</span>'}</td>
       <td style="max-width:220px;color:var(--ink-70);font-size:12.5px;">${p.desc || ''}</td>
       <td>${p.id}</td>
@@ -164,7 +168,7 @@ function renderTable(){
 /* ======================================================
    PRODUCT FORM
    ====================================================== */
-let pendingImage = ''; // base64 or URL
+let pendingImages = []; // Array of base64 or URLs
 
 function loadIntoForm(id){
   const p = elvenLoad().find(x => x.id === id);
@@ -177,13 +181,16 @@ function loadIntoForm(id){
   document.getElementById('f-tag').value      = p.tag || '';
   document.getElementById('f-desc').value     = p.desc || '';
   document.getElementById('f-section').value  = p.section || '';
+  if (document.getElementById('f-quantity')) document.getElementById('f-quantity').value = p.quantity !== undefined && p.quantity !== null ? p.quantity : '';
+  if (document.getElementById('f-soldout')) document.getElementById('f-soldout').checked = p.soldOut || false;
+  
   const iconRadio = document.querySelector(`input[name="icon"][value="${p.icon}"]`);
   if(iconRadio) iconRadio.checked = true;
 
   // image preview
-  pendingImage = p.image || '';
-  updateImagePreview(pendingImage);
-  document.getElementById('f-img-url').value = (p.image && !p.image.startsWith('data:')) ? p.image : '';
+  pendingImages = (p.images && p.images.length) ? [...p.images] : (p.image ? [p.image] : []);
+  updateImagePreviews();
+  document.getElementById('f-img-url').value = pendingImages.filter(src => !src.startsWith('data:')).join(', ');
 
   document.getElementById('formTitle').textContent   = 'Edit listing';
   document.getElementById('submitBtn').textContent   = 'Save changes';
@@ -193,10 +200,10 @@ function loadIntoForm(id){
 
 function resetForm(){
   editingId = null;
-  pendingImage = '';
+  pendingImages = [];
   document.getElementById('productForm').reset();
   populateCategorySelect();
-  updateImagePreview('');
+  updateImagePreviews();
   document.getElementById('f-img-url').value       = '';
   document.getElementById('formTitle').textContent  = 'Add a new listing';
   document.getElementById('submitBtn').textContent  = 'Add listing';
@@ -204,16 +211,15 @@ function resetForm(){
   document.getElementById('priceMsg').textContent   = '';
 }
 
-function updateImagePreview(src){
-  const prev = document.getElementById('imgPreview');
-  if(!prev) return;
-  if(src){
-    prev.innerHTML = `<img src="${src}" alt="preview">`;
-    prev.style.display = 'block';
-  } else {
-    prev.innerHTML = '';
-    prev.style.display = 'none';
-  }
+function updateImagePreviews(){
+  const wrap = document.getElementById('imgPreviewWrap');
+  if(!wrap) return;
+  wrap.innerHTML = pendingImages.map((src, i) => `
+    <div class="img-preview-box" style="display:block; position:relative;">
+      ${i === 0 ? '<span style="position:absolute;top:2px;left:2px;background:rgba(0,0,0,0.6);color:#fff;font-size:9px;padding:2px 4px;border-radius:2px;line-height:1;">Main</span>' : ''}
+      <img src="${src}" alt="preview">
+    </div>
+  `).join('');
 }
 
 /* ======================================================
@@ -268,27 +274,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* image file picker */
   document.getElementById('f-img-file')?.addEventListener('change', e => {
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      pendingImage = ev.target.result;
-      updateImagePreview(pendingImage);
-      document.getElementById('f-img-url').value = '';
-    };
-    reader.readAsDataURL(file);
+    const files = Array.from(e.target.files);
+    if(!files.length) return;
+    pendingImages = [];
+    let loaded = 0;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        pendingImages.push(ev.target.result);
+        loaded++;
+        if(loaded === files.length) {
+          updateImagePreviews();
+          document.getElementById('f-img-url').value = '';
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   });
 
   /* image URL paste */
   document.getElementById('f-img-url')?.addEventListener('input', e => {
-    const url = e.target.value.trim();
-    if(url){ pendingImage = url; updateImagePreview(url); }
+    const urls = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
+    if(urls.length){ pendingImages = urls; updateImagePreviews(); }
   });
 
   /* clear image */
   document.getElementById('clearImgBtn')?.addEventListener('click', () => {
-    pendingImage = '';
-    updateImagePreview('');
+    pendingImages = [];
+    updateImagePreviews();
     document.getElementById('f-img-file').value = '';
     document.getElementById('f-img-url').value  = '';
   });
@@ -296,6 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* submit product form */
   document.getElementById('productForm')?.addEventListener('submit', e => {
     e.preventDefault();
+    const qtyInput = document.getElementById('f-quantity');
+    const soInput = document.getElementById('f-soldout');
     const data = {
       name:     document.getElementById('f-name').value.trim(),
       category: document.getElementById('f-category').value,
@@ -304,8 +319,12 @@ document.addEventListener('DOMContentLoaded', () => {
       desc:     document.getElementById('f-desc').value.trim(),
       icon:     (document.querySelector('input[name="icon"]:checked')||{}).value || 'necklace',
       section:  document.getElementById('f-section').value,
-      image:    pendingImage,
+      quantity: (qtyInput && qtyInput.value !== '') ? Number(qtyInput.value) : null,
+      soldOut:  (soInput && soInput.checked) ? true : false,
+      images:   pendingImages.length ? [...pendingImages] : null,
+      image:    pendingImages.length ? pendingImages[0] : ''
     };
+    
     if(!data.name || !data.price){ flash('Name and price are required'); return; }
     if(editingId){ elvenUpdate(editingId, data); flash(`Saved "${data.name}"`); }
     else          { elvenAdd(data);              flash(`Added "${data.name}"`); }
@@ -313,12 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('cancelBtn')?.addEventListener('click', resetForm);
-
-  document.getElementById('resetSeedBtn')?.addEventListener('click', () => {
-    if(confirm('Restore the original 20-item catalog? This replaces all current listings.')){
-      elvenResetSeed(); resetForm(); refreshAll(); flash('Catalog restored to defaults');
-    }
-  });
 
   /* add category */
   document.getElementById('addCatBtn')?.addEventListener('click', () => {

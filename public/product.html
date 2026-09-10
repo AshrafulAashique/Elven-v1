@@ -228,6 +228,19 @@
       const heartFill = isWished ? 'var(--rose-2)' : 'none';
       const heartStroke = isWished ? 'var(--rose-2)' : 'currentColor';
       
+      const isSoldOut = product.soldOut || product.quantity === 0;
+      const buttonState = isSoldOut ? `<button class="pdp-add-btn" disabled style="opacity:0.5;cursor:not-allowed;">Out of Stock</button>` : `<button class="pdp-add-btn" data-add="${product.id}">Add to Bag — ${inr(product.price)}</button>`;
+
+      const mainImg = (product.images && product.images.length) ? product.images[0] : product.image;
+      const mainImgTag = mainImg ? `<img id="pdpMainImage" src="${mainImg}" alt="${product.name}">` : `<div style="font-size:100px;">${ELVEN_ICONS[product.icon] || ''}</div>`;
+      
+      let thumbsHTML = '';
+      if (product.images && product.images.length > 1) {
+        thumbsHTML = `<div style="display:flex;gap:10px;margin-top:16px;overflow-x:auto;padding-bottom:5px;">` + 
+          product.images.map((src, idx) => `<div onclick="document.getElementById('pdpMainImage').src='${src}'; Array.from(this.parentNode.children).forEach(c=>c.style.borderColor='transparent'); this.style.borderColor='var(--ink)'" style="width:60px;height:60px;border-radius:4px;overflow:hidden;border:1px solid ${idx===0?'var(--ink)':'transparent'};cursor:pointer;flex-shrink:0;transition:border-color .2s;"><img src="${src}" style="width:100%;height:100%;object-fit:cover;"></div>`).join('') +
+          `</div>`;
+      }
+
       const pdpHTML = `
         <div style="grid-column: 1 / -1; margin-bottom: -30px; display: flex; justify-content: space-between; align-items: center;">
           <a href="index.html" style="text-decoration:none; color:var(--ink-70); font-size: 14px; letter-spacing:.05em; display:flex; align-items:center; gap:6px;">
@@ -235,18 +248,21 @@
              Back to Shop
           </a>
         </div>
-        <div class="pdp-image-wrap" style="position:relative;">
-          <button style="position:absolute; right:20px; top:20px; z-index:10; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.9); border:none; box-shadow:0 4px 12px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; cursor:pointer;" aria-label="Save" onclick="toggleWishlist('${product.id}'); const s=this.querySelector('svg'); const isF=s.getAttribute('fill')!=='none'; s.setAttribute('fill', isF?'none':'var(--rose-2)'); s.setAttribute('stroke', isF?'currentColor':'var(--rose-2)');">
-            <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8" style="width:20px; height:20px;"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
-          </button>
-          ${product.image ? `<img src="${product.image}" alt="${product.name}">` : `<div style="font-size:100px;">${ELVEN_ICONS[product.icon] || ''}</div>`}
+        <div>
+          <div class="pdp-image-wrap" style="position:relative;">
+            <button style="position:absolute; right:20px; top:20px; z-index:10; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.9); border:none; box-shadow:0 4px 12px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; cursor:pointer;" aria-label="Save" onclick="toggleWishlist('${product.id}'); const s=this.querySelector('svg'); const isF=s.getAttribute('fill')!=='none'; s.setAttribute('fill', isF?'none':'var(--rose-2)'); s.setAttribute('stroke', isF?'currentColor':'var(--rose-2)');">
+              <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8" style="width:20px; height:20px;"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
+            </button>
+            ${mainImgTag}
+          </div>
+          ${thumbsHTML}
         </div>
         <div class="pdp-info">
           <div class="pdp-cat">${product.category}</div>
           <h1 class="pdp-title">${product.name}</h1>
           <div class="pdp-price">${inr(product.price)}</div>
           <p class="pdp-desc">${product.desc}</p>
-          <button class="pdp-add-btn" data-add="${product.id}">Add to Bag — ${inr(product.price)}</button>
+          ${buttonState}
           
           <ul class="pdp-details-list">
             <li><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/></svg> Ships across India within 3-7 days</li>

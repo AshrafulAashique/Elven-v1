@@ -93,18 +93,23 @@ window.addEventListener('scroll', rafThrottle(() => {
 /* ---------- card HTML ---------- */
 function cardHTML(p){
   const icon = ELVEN_ICONS[p.icon] || ELVEN_ICONS.necklace;
-  const mediaContent = p.image
-    ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">`
+  const mainImg = (p.images && p.images.length) ? p.images[0] : p.image;
+  const mediaContent = mainImg
+    ? `<img src="${mainImg}" alt="${p.name}" loading="lazy" decoding="async">`
     : icon;
   const isWished = currentWishlist.includes(p.id);
   const heartFill = isWished ? 'var(--rose-2)' : 'none';
   const heartStroke = isWished ? 'var(--rose-2)' : 'currentColor';
   
+  const isSoldOut = p.soldOut || p.quantity === 0;
+  const tagBadge = isSoldOut ? `<span class="card-tag" style="background:#e07070;color:#fff;">Sold Out</span>` : (p.tag ? `<span class="card-tag">${p.tag}</span>` : '');
+  const buttonState = isSoldOut ? `<button class="card-add" disabled style="opacity:0.5;cursor:not-allowed;color:var(--ink-40);">Out of stock</button>` : `<button class="card-add" data-add="${p.id}">Add to bag</button>`;
+  
   return `
   <article class="card" data-id="${p.id}">
     <a href="product.html?id=${p.id}" class="card-link-wrapper" style="text-decoration:none; color:inherit; display:block;">
       <div class="card-media" style="background:${gradientFor(p.id)};">
-        ${p.tag ? `<span class="card-tag">${p.tag}</span>` : ''}
+        ${tagBadge}
         <button class="card-fav" aria-label="Save" onclick="event.preventDefault(); toggleWishlist('${p.id}')">
           <svg viewBox="0 0 24 24" fill="${heartFill}" stroke="${heartStroke}" stroke-width="1.8"><path d="M12 21s-7-4.6-10-9.2C.5 8.4 2 4.5 6 4c2.2-.3 4 1 6 3.2C14 5 15.8 3.7 18 4c4 .5 5.5 4.4 4 7.8C19 16.4 12 21 12 21z"/></svg>
         </button>
@@ -117,7 +122,7 @@ function cardHTML(p){
     </a>
     <div class="card-row" style="padding: 0 20px 26px;">
       <span class="card-price">${inr(p.price)}</span>
-      <button class="card-add" data-add="${p.id}">Add to bag</button>
+      ${buttonState}
     </div>
   </article>`;
 }

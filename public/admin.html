@@ -67,7 +67,6 @@
   <button data-tab="products" class="active">Products</button>
   <button data-tab="categories">Categories</button>
   <button data-tab="content">Content</button>
-  <button data-tab="settings">Settings</button>
   <div class="spacer"></div>
   <button id="logoutBtn">Logout</button>
 </div>
@@ -90,6 +89,7 @@
           <th>Product</th>
           <th>Category</th>
           <th>Price</th>
+          <th>Stock</th>
           <th>Section</th>
           <th>Description</th>
           <th>ID</th>
@@ -107,6 +107,10 @@
             <div class="field"><label>Name</label><input type="text" id="f-name" required></div>
             <div class="field"><label>Price (₹)</label><input type="number" id="f-price" required><div id="priceMsg"></div></div>
             <div class="field"><label>Category</label><select id="f-category"></select></div>
+            <div style="display:flex; gap:10px;">
+              <div class="field" style="flex:1"><label>Quantity</label><input type="number" id="f-quantity" min="0" placeholder="e.g. 10"></div>
+              <div class="field" style="flex:1; align-items:flex-start;"><label>Sold Out</label><label style="display:flex;align-items:center;height:38px;margin:0;"><input type="checkbox" id="f-soldout" style="width:16px;height:16px;margin:0 8px 0 0;"> Out of stock</label></div>
+            </div>
             <div class="field"><label>Section Tag</label>
               <select id="f-section">
                 <option value="">None</option>
@@ -128,11 +132,11 @@
                 <label><input type="radio" name="icon" value="handbag"> Handbag</label>
               </div>
             </div>
-            <div class="field"><label>Upload Image</label><input type="file" id="f-img-file" accept="image/*"></div>
-            <div class="field"><label>Or Image URL</label><input type="text" id="f-img-url"></div>
-            <div style="display:flex;gap:10px;align-items:center;">
-              <div class="img-preview-box" id="imgPreview"></div>
-              <button type="button" class="btn secondary" id="clearImgBtn" style="height:fit-content;">Clear Image</button>
+            <div class="field"><label>Upload Images (First is main)</label><input type="file" id="f-img-file" accept="image/*" multiple></div>
+            <div class="field"><label>Or Image URLs (comma separated)</label><input type="text" id="f-img-url" placeholder="url1.jpg, url2.jpg"></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;flex-direction:column;margin-bottom:10px;">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;" id="imgPreviewWrap"></div>
+              <button type="button" class="btn secondary" id="clearImgBtn" style="height:fit-content;font-size:10px;padding:6px 12px;">Clear Images</button>
             </div>
           </div>
         </div>
@@ -160,15 +164,6 @@
   <div id="tab-content" class="tab-pane">
     <h3>Storefront Headers</h3>
     <div class="panel" id="headersForm" style="display:flex;flex-direction:column;gap:15px;"></div>
-  </div>
-  
-  <!-- SETTINGS TAB -->
-  <div id="tab-settings" class="tab-pane">
-    <h3>System Settings</h3>
-    <div class="panel">
-      <p style="margin-bottom:20px;color:rgba(251,241,236,.7);font-size:14px;line-height:1.5;">Resetting the catalog will delete all your custom products and restore the original 20 demo items. This action cannot be undone.</p>
-      <button class="btn" style="background:#e07070;color:#fff;" id="resetSeedBtn">Factory Reset Catalog</button>
-    </div>
   </div>
 </div>
 
