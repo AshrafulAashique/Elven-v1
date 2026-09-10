@@ -211,7 +211,6 @@ p{ margin:0; line-height: 1.6; }
 .hero-scrollcue{
   position:absolute; left:50%; bottom:38px; transform:translateX(-50%);
   display:flex; flex-direction:column; align-items:center; gap:10px;
-  font-family: var(--brand);
   font-size:12px; letter-spacing:.24em; color:var(--cream-2);
 }
 .hero-scrollcue .line{

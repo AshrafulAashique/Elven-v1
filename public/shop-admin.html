@@ -207,7 +207,7 @@
   const pathUser = window.location.pathname.replace('/', '').trim();
   const isValidUser = ELVEN_ADMINS.some(a => a.user === pathUser);
 
-  if (!isValidUser && window.location.pathname !== '/shop-admin.html') {
+  if (!isValidUser && window.location.pathname !== '/shop-admin.html' && window.location.pathname !== '/shop-admin') {
     window.location.replace('/'); // Redirect to home if it's an invalid path
   } else if (isValidUser) {
     document.getElementById('uname').value = pathUser;
