@@ -161,7 +161,7 @@ p{ margin:0; line-height: 1.6; }
   text-align: center;
   z-index: 10;
   position: relative;
-  transform: translateY(-40px);
+  transform: translateY(-90px);
 }
 .hero-logo-massive {
   font-family: var(--brand);
@@ -179,8 +179,8 @@ p{ margin:0; line-height: 1.6; }
   transform: translateZ(0);
 }
 .hero-logo-massive span:hover {
-  color: #F0B98D;
-  text-shadow: 0 0 15px rgba(240, 185, 141, 0.9), 0 0 30px rgba(240, 185, 141, 0.6);
+  color: #FFF9F0;
+  text-shadow: 0 0 15px rgba(255, 249, 240, 0.9), 0 0 30px rgba(255, 249, 240, 0.6);
 }
 .hero-coffee-bg .hero-sub {
   color: var(--cream-2);
@@ -193,9 +193,17 @@ p{ margin:0; line-height: 1.6; }
   color: var(--cream);
   font-size: clamp(13px, 1.5vw, 15px);
   line-height: 1.6;
-  opacity: 0.8;
+  opacity: 0.9;
   max-width: 500px;
   margin: 0 auto;
+}
+.hero-bottom-text {
+  position: absolute;
+  bottom: 120px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
 }
 
 
