@@ -204,7 +204,7 @@
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function renderPDP() {
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('id');
       const allProducts = elvenLoad();
@@ -259,7 +259,8 @@
       document.title = `${product.name} — Elven`;
       
       // Bind Add button
-      bindAddButtons();
+      if (typeof bindAddButtons === 'function') bindAddButtons();
+      else window.addEventListener('DOMContentLoaded', bindAddButtons);
       
       // Render Related Products
       const relatedGrid = document.getElementById('relatedGrid');
@@ -273,11 +274,12 @@
       related = related.slice(0, 6);
       
       if(related.length > 0) {
-        renderGrid(relatedGrid, related);
+        if (typeof renderGrid === 'function') renderGrid(relatedGrid, related);
+        else window.addEventListener('DOMContentLoaded', () => renderGrid(relatedGrid, related));
       } else {
         relatedGrid.parentElement.parentElement.style.display = 'none';
       }
-    });
+    })();
   </script>
 </body>
 </html>

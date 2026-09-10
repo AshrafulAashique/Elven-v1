@@ -3,6 +3,13 @@
    Display: Italiana  |  Body/UI: Jost
    ============================================================ */
 
+@font-face {
+  font-family: 'Agraham';
+  src: url('../assets/fonts/agraham/Agraham.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root{
   --cream:   #FBF1EC;
   --cream-2: #F6E7DF;
@@ -21,6 +28,7 @@
 
   --display: 'Playfair Display', serif;
   --body: 'Montserrat', sans-serif;
+  --brand: 'Agraham', serif;
 
   --container: 1400px;
   --edge: clamp(20px, 5vw, 64px);
@@ -43,8 +51,8 @@ img{ max-width:100%; display:block; }
 a{ color:inherit; text-decoration:none; }
 button{ font-family:inherit; cursor:pointer; }
 ul{ margin:0; padding:0; list-style:none; }
-h1,h2,h3{ font-family:var(--display); font-weight:400; margin:0; letter-spacing:.01em; }
-p{ margin:0; }
+h1,h2,h3{ font-family:var(--display); font-weight:400; margin:0; letter-spacing:.01em; line-height: 1.4; }
+p{ margin:0; line-height: 1.6; }
 
 ::selection{ background:var(--rose); color:var(--white); }
 
@@ -64,7 +72,7 @@ p{ margin:0; }
 }
 #loader.done{ opacity:0; visibility:hidden; pointer-events:none; }
 .loader-mark{
-  font-family:var(--display); font-size:clamp(28px,4vw,40px);
+  font-family:var(--display); font-size:clamp(22px,3vw,32px);
   letter-spacing:.14em; color:var(--ink);
 }
 .loader-track{
@@ -86,14 +94,17 @@ p{ margin:0; }
   mix-blend-mode:normal;
 }
 .nav.scrolled{
-  padding:14px var(--edge);
-  background:rgba(251,241,236,.86);
-  backdrop-filter:blur(10px);
-  box-shadow:0 1px 0 rgba(43,33,30,.08);
+  padding:6px var(--edge);
+  background:rgba(251,241,236,.65);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 0 rgba(43,33,30,.06);
 }
 .nav-word{
-  font-family:var(--display); font-size:22px; letter-spacing:.18em;
-  color:var(--ink); position:relative; z-index:56; transition: color .3s;
+  font-family:var(--brand); font-size:26px; letter-spacing:.18em;
+  color:var(--ink); position:relative; z-index:56; transition: color .3s, font-size .3s var(--ease);
+}
+.nav.scrolled .nav-word {
+  font-size: 19px;
 }
 .nav-links{
   display:flex; gap:36px; font-size:13px; letter-spacing:.06em;
@@ -138,7 +149,7 @@ p{ margin:0; }
 .hero.hero-coffee-bg{
   position:relative;
   height:100vh;
-  background: #1A1412;
+  background: url('../assets/hero-bg/Gemini_Generated_Image_iijgghiijgghiijg-watermark-removed.png') center/cover no-repeat;
   overflow: hidden;
 }
 .hero-stage{
@@ -152,13 +163,20 @@ p{ margin:0; }
   position: relative;
 }
 .hero-logo-massive {
-  font-family: var(--display);
-  font-size: clamp(80px, 18vw, 240px);
-  color: #E8A06B; /* Solid rich gold color for high contrast */
-  line-height: 1;
+  font-family: var(--brand);
+  font-size: clamp(50px, 12vw, 150px);
+  color: #FFFFFF;
+  line-height: 1.2;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin: 0;
+  transition: text-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+  will-change: transform, text-shadow;
+  transform: translateZ(0);
+}
+.hero-logo-massive:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.7), 0 0 60px rgba(255, 255, 255, 0.5);
+  transform: scale(1.02);
 }
 .hero-coffee-bg .hero-sub {
   color: var(--cream-2);
@@ -178,27 +196,28 @@ p{ margin:0; }
 
 /* Glow Overlay Effect */
 .magical-glow {
-  color: #FBF1EC;
+  color: #FFFFFF;
   animation: glowOverlay 4s ease-in-out infinite alternate;
 }
 @keyframes glowOverlay {
   0% { 
     text-shadow: 
-      0 0 10px rgba(232, 160, 107, 0.2),
-      0 0 20px rgba(232, 160, 107, 0.1);
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.15);
   }
   100% { 
     text-shadow: 
-      0 0 15px rgba(232, 160, 107, 0.7),
-      0 0 30px rgba(232, 160, 107, 0.5),
-      0 0 45px rgba(232, 160, 107, 0.3);
+      0 0 15px rgba(255, 255, 255, 0.8),
+      0 0 30px rgba(255, 255, 255, 0.6),
+      0 0 45px rgba(255, 255, 255, 0.4);
   }
 }
 
 .hero-scrollcue{
   position:absolute; left:50%; bottom:38px; transform:translateX(-50%);
   display:flex; flex-direction:column; align-items:center; gap:10px;
-  font-size:10px; letter-spacing:.24em; color:var(--cream-2);
+  font-family: var(--brand);
+  font-size:12px; letter-spacing:.24em; color:var(--cream-2);
 }
 .hero-scrollcue .line{
   width:1px; height:34px; background:rgba(251, 241, 236, 0.2); position:relative; overflow:hidden;
@@ -225,7 +244,7 @@ p{ margin:0; }
 }
 .packaging-copy h2 {
   font-family: var(--display);
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(26px, 3.5vw, 38px);
   margin-bottom: 20px;
   color: var(--ink);
 }
@@ -270,7 +289,7 @@ p{ margin:0; }
   max-width:900px; margin:0 auto;
 }
 .statement p{
-  font-family:var(--display); font-size:clamp(24px,3.6vw,40px); line-height:1.4; color:var(--ink);
+  font-family:var(--display); font-size:clamp(20px,3vw,32px); line-height:1.6; color:var(--ink);
 }
 .statement .num{
   display:block; font-family:var(--body); font-size:12px; letter-spacing:.2em; color:var(--rose-2);
@@ -295,7 +314,7 @@ p{ margin:0; }
 .rail-card.handbags::before{ background:linear-gradient(155deg,#E9C9B8 0%, var(--rose) 100%); }
 .rail-card .glyph{ position:absolute; right:26px; top:26px; opacity:.5; }
 .rail-card .glyph svg{ width:64px; height:64px; stroke:var(--ink); }
-.rail-label{ font-family:var(--display); font-size:clamp(28px,3vw,42px); color:var(--ink); }
+.rail-label{ font-family:var(--display); font-size:clamp(24px,2.5vw,36px); color:var(--ink); }
 .rail-count{ font-size:12px; letter-spacing:.1em; color:var(--ink-70); margin-top:6px; }
 .rail-arrow{
   position:absolute; left:34px; top:34px; width:38px; height:38px; border-radius:50%;
@@ -312,7 +331,7 @@ p{ margin:0; }
   padding:0 var(--edge); max-width:var(--container); margin:0 auto 24px;
   border-bottom:1px solid rgba(43,33,30,.12); padding-bottom:12px;
 }
-.section-head h2{ font-size:clamp(30px,4vw,48px); }
+.section-head h2{ font-size:clamp(24px,3vw,36px); }
 .section-head .count{ font-size:12px; letter-spacing:.1em; color:var(--ink-45); }
 
 /* ---------------- Product grid (4-col, smaller) ---------------- */
@@ -360,7 +379,7 @@ p{ margin:0; }
 /* card body — generous padding, visible price */
 .card-body{ padding:22px 20px 26px; }
 .card-cat{ font-size:10.5px; letter-spacing:.16em; color:var(--rose-2); text-transform:lowercase; }
-.card-name{ font-family:var(--display); font-size:21px; margin-top:8px; color:var(--ink); line-height:1.2; }
+.card-name{ font-family:var(--display); font-size:18px; margin-top:8px; color:var(--ink); line-height:1.4; }
 .card-row{ display:flex; align-items:center; justify-content:space-between; margin-top:14px; }
 .card-price{
   font-size:18px; font-weight:600; letter-spacing:.02em; color:var(--ink);
@@ -384,7 +403,7 @@ p{ margin:0; }
   padding:0 var(--edge); max-width:var(--container); margin:0 auto 24px;
   padding-bottom:12px; border-bottom:1px solid rgba(43,33,30,.10);
 }
-.carousel-head h2{ font-size:clamp(28px,4vw,46px); }
+.carousel-head h2{ font-size:clamp(24px,3vw,36px); }
 .carousel-head-right{ display:flex; align-items:center; gap:12px; }
 .carousel-label{
   font-size:11px; letter-spacing:.14em; color:var(--ink-45); text-transform:uppercase;
@@ -458,7 +477,7 @@ p{ margin:0; }
 }
 .banner-art svg{ position:absolute; inset:0; margin:auto; width:40%; height:40%; stroke:var(--white); opacity:.85; }
 .banner-copy .num{ font-size:12px; letter-spacing:.2em; color:var(--rose-2); }
-.banner-copy h2{ font-size:clamp(30px,4vw,52px); margin-top:16px; line-height:1.08; }
+.banner-copy h2{ font-size:clamp(26px,3.5vw,42px); margin-top:16px; line-height:1.2; }
 .banner-copy p{ margin-top:22px; max-width:420px; color:var(--ink-70); line-height:1.75; font-size:15px; }
 .banner-cta{
   margin-top:30px; display:inline-flex; align-items:center; gap:12px; font-size:13px; letter-spacing:.08em;
@@ -516,7 +535,7 @@ footer{ padding: 40px var(--edge) 30px; }
 }
 .drawer-item .thumb svg{ width:50%; height:50%; stroke:var(--ink); }
 .drawer-item .info{ flex:1; min-width:0; }
-.drawer-item .info .n{ font-family:var(--display); font-size:15px; line-height:1.3; word-break:break-word; }
+.drawer-item .info .n{ font-family:var(--display); font-size:14px; line-height:1.5; word-break:break-word; }
 .drawer-item .info .p{ font-size:12.5px; color:var(--ink-70); margin-top:6px; }
 .drawer-item .rm{ font-size:11px; color:var(--ink-45); border-bottom:1px solid var(--ink-45); }
 .drawer-empty{ color:var(--ink-45); font-size:13px; text-align:center; margin-top:60px; }
@@ -626,18 +645,21 @@ footer{ padding: 40px var(--edge) 30px; }
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding-bottom: 12px;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
   }
   .carousel-track-wrap::-webkit-scrollbar { display: none; }
-  .carousel-track { gap: 14px; }
+  .carousel-track { gap: 14px; will-change: transform; transform: translateZ(0); }
   .carousel-track .card { flex: 0 0 48vw; scroll-snap-align: center; }
   .card-body{ padding:16px 14px 20px; }
   .card-price{ font-size:16px; }
 
   /* App-like navigation overrides */
   .nav { justify-content: center; padding: 18px 0; }
-  .nav.scrolled { padding: 14px 0; }
+  .nav.scrolled { padding: 8px 0; }
   .nav-right, .nav-links, .nav-toggle { display: none !important; }
   .nav-word { font-size: 26px; }
+  .nav.scrolled .nav-word { font-size: 20px; }
 
   .mobile-tab-bar {
     display: flex;
