@@ -58,8 +58,9 @@ function applyHeaders(){
   setTxt ('featuredTitleEl',    h.featuredTitle);
   setTxt ('bestsellerTitleEl',  h.bestsellerTitle);
   setTxt ('trendingTitleEl',    h.trendingTitle);
-  setTxt ('jewelleryTitleEl',   h.jewelleryTitle);
-  setTxt ('handbagsTitleEl',    h.handbagsTitle);
+  setTxt ('earringsTitleEl',    h.earringsTitle || 'Earrings');
+  setTxt ('necklacesTitleEl',   h.necklacesTitle || 'Necklaces');
+  setTxt ('ringsTitleEl',       h.ringsTitle || 'Rings');
   set    ('footerTaglineEl',    h.footerTagline);
 }
 
@@ -161,15 +162,21 @@ function renderAll(){
   renderGrid(document.getElementById('trendingGrid'),   trending);
 
   // Regular grids
-  const jewellery = products.filter(p => p.category !== 'Handbags');
-  const handbags  = products.filter(p => p.category === 'Handbags');
-  renderGrid(document.getElementById('jewelleryGrid'), jewellery);
-  renderGrid(document.getElementById('handbagsGrid'),  handbags);
+  const earrings  = products.filter(p => p.category === 'Earrings');
+  const necklaces = products.filter(p => p.category === 'Necklaces');
+  const rings     = products.filter(p => p.category === 'Rings');
 
-  const jc = document.getElementById('jewelleryCount');
-  const hc = document.getElementById('handbagsCount');
-  if(jc) jc.textContent = jewellery.length + ' pieces';
-  if(hc) hc.textContent = handbags.length  + ' pieces';
+  renderGrid(document.getElementById('earringsGrid'),  earrings);
+  renderGrid(document.getElementById('necklacesGrid'), necklaces);
+  renderGrid(document.getElementById('ringsGrid'),     rings);
+
+  const ec = document.getElementById('earringsCount');
+  const nc = document.getElementById('necklacesCount');
+  const rc = document.getElementById('ringsCount');
+  
+  if(ec) ec.textContent = earrings.length  + ' pieces';
+  if(nc) nc.textContent = necklaces.length + ' pieces';
+  if(rc) rc.textContent = rings.length     + ' pieces';
 
   bindAddButtons();
   applyHeaders();

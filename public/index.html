@@ -25,9 +25,9 @@
     <ul class="nav-links">
       <li><a href="#section-featured">Featured</a></li>
       <li><a href="#section-bestseller">Best Sellers</a></li>
-      <li><a href="#jewellery">Jewellery</a></li>
-      <li><a href="#handbags">Handbags</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="#earrings">Earrings</a></li>
+      <li><a href="#necklaces">Necklaces</a></li>
+      <li><a href="#rings">Rings</a></li>
     </ul>
     <div class="nav-right">
       <button class="nav-bag" id="bagBtn">
@@ -42,10 +42,11 @@
   <section class="hero hero-coffee-bg">
     <div class="hero-stage">
       <div class="hero-logo-container">
-        <h1 class="hero-logo-massive magical-glow">ELVEN</h1>
+        <h1 class="hero-logo-massive">
+          <span>E</span><span>L</span><span>V</span><span>E</span><span>N</span>
+        </h1>
         <div class="hero-text-block">
-          <p class="hero-sub" id="heroSubEl">Fine-finished jewellery and handbags, designed in-house and priced from ₹399. Keep scrolling.</p>
-          <p class="hero-desc">Discover our meticulously crafted collections, bridging the gap between timeless heritage and modern sophistication. Every piece is a statement of elegance, designed for the empowered woman who demands uncompromising luxury in her everyday life.</p>
+          <p class="hero-desc" style="font-size: 20px; font-weight: 500;">everyone deserves a gift.</p>
         </div>
       </div>
       
@@ -71,30 +72,30 @@
     </div>
   </section>
 
-  <!-- ============ Statement ============ -->
-  <section class="statement" data-reveal>
-    <span class="num">01 — the idea</span>
-    <p>Elven exists for the woman who wants pieces that feel considered, not disposable —
-    jewellery and bags with the finish of a luxury house, priced for real life.</p>
-  </section>
+
 
   <!-- ============ Category rail ============ -->
   <section class="rail" data-reveal>
-    <div class="rail-grid">
-      <a href="#jewellery" class="rail-card jewellery">
-        <span class="rail-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-        <span class="glyph"><svg viewBox="0 0 64 64" fill="none" stroke-width="1"><path d="M14 10c0 14 8 24 18 24s18-10 18-24" stroke-linecap="round"/><circle cx="32" cy="40" r="5"/></svg></span>
-        <div>
-          <div class="rail-label">Jewellery</div>
-          <div class="rail-count" id="jewelleryCount">— pieces</div>
+    <div class="rail-grid-videos">
+      <a href="#earrings" class="rail-video-card">
+        <video autoplay muted loop playsinline src="assets/videos/earrings.mp4"></video>
+        <div class="rail-video-overlay">
+          <div class="rail-label">Earrings</div>
+          <div class="rail-count" id="earringsCount">— pieces</div>
         </div>
       </a>
-      <a href="#handbags" class="rail-card handbags">
-        <span class="rail-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-        <span class="glyph"><svg viewBox="0 0 64 64" fill="none" stroke-width="1"><path d="M20 24c0-8 5-14 12-14s12 6 12 14" stroke-linecap="round"/><rect x="12" y="24" width="40" height="30" rx="2"/></svg></span>
-        <div>
-          <div class="rail-label">Handbags</div>
-          <div class="rail-count" id="handbagsCount">— pieces</div>
+      <a href="#necklaces" class="rail-video-card">
+        <video autoplay muted loop playsinline src="assets/videos/necklaces.mp4"></video>
+        <div class="rail-video-overlay">
+          <div class="rail-label">Necklaces</div>
+          <div class="rail-count" id="necklacesCount">— pieces</div>
+        </div>
+      </a>
+      <a href="#rings" class="rail-video-card">
+        <video autoplay muted loop playsinline src="assets/videos/rings.mp4"></video>
+        <div class="rail-video-overlay">
+          <div class="rail-label">Rings</div>
+          <div class="rail-count" id="ringsCount">— pieces</div>
         </div>
       </a>
     </div>
@@ -141,35 +142,31 @@
     </div>
   </section>
 
-  <!-- ============ Jewellery grid ============ -->
-  <section class="shop" id="jewellery">
+  <!-- ============ Earrings grid ============ -->
+  <section class="shop" id="earrings">
     <div class="section-head">
-      <h2 id="jewelleryTitleEl">Jewellery</h2>
-      <span class="count" id="jewelleryCountLabel">from ₹399</span>
+      <h2 id="earringsTitleEl">Earrings</h2>
+      <span class="count" id="earringsCountLabel">from ₹399</span>
     </div>
-    <div class="grid" id="jewelleryGrid"></div>
+    <div class="grid" id="earringsGrid"></div>
   </section>
 
-  <!-- ============ Editorial banner ============ -->
-  <section class="banner" id="about" data-reveal>
-    <div class="banner-art">
-      <svg viewBox="0 0 64 64" fill="none" stroke-width="1"><circle cx="32" cy="38" r="14"/><path d="M25 24l7-12 7 12-7 6z" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="banner-copy">
-      <span class="num">02 — how it's made</span>
-      <h2>Finished like fine jewellery, priced like neither.</h2>
-      <p>Every piece is plated to resist everyday wear, packed in a signature box, and inspected by hand before it leaves our Bengaluru studio. No middlemen, no markup for a logo.</p>
-      <a href="#jewellery" class="banner-cta">Shop the edit →</a>
-    </div>
-  </section>
-
-  <!-- ============ Handbags grid ============ -->
-  <section class="shop" id="handbags">
+  <!-- ============ Necklaces grid ============ -->
+  <section class="shop" id="necklaces">
     <div class="section-head">
-      <h2 id="handbagsTitleEl">Handbags</h2>
-      <span class="count" id="handbagsCountLabel">from ₹399</span>
+      <h2 id="necklacesTitleEl">Necklaces</h2>
+      <span class="count" id="necklacesCountLabel">from ₹599</span>
     </div>
-    <div class="grid" id="handbagsGrid"></div>
+    <div class="grid" id="necklacesGrid"></div>
+  </section>
+  
+  <!-- ============ Rings grid ============ -->
+  <section class="shop" id="rings">
+    <div class="section-head">
+      <h2 id="ringsTitleEl">Rings</h2>
+      <span class="count" id="ringsCountLabel">from ₹499</span>
+    </div>
+    <div class="grid" id="ringsGrid"></div>
   </section>
 
   <!-- ============ Trust strip ============ -->
@@ -201,8 +198,9 @@
         <h3>Explore</h3>
         <a href="#section-featured">Featured Collection</a>
         <a href="#section-bestseller">Best Sellers</a>
-        <a href="#jewellery">Jewellery</a>
-        <a href="#handbags">Handbags</a>
+        <a href="#earrings">Earrings</a>
+        <a href="#necklaces">Necklaces</a>
+        <a href="#rings">Rings</a>
       </div>
       <div class="footer-col">
         <h3>Store Information</h3>
@@ -276,7 +274,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>Home</span>
     </a>
-    <a href="#jewellery" class="tab-btn">
+    <a href="#earrings" class="tab-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       <span>Shop</span>
     </a>
